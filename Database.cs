@@ -1,7 +1,6 @@
 using Npgsql;
 using System;
 using UnityEngine;
-using UnityEngine.Events;
 
 public class Database : MonoBehaviour
 {
@@ -10,6 +9,7 @@ public class Database : MonoBehaviour
     public static NpgsqlDataReader _dbReader;
 
     public static CitizenTable citizenTable;// = new CitizenTable();
+    public static StateInstitutionTable SITable;
     //public static UnityEvent<ITableElement> ItemChanged = new UnityEvent<ITableElement>();
 
     public static ErrorDisplayer errorDisplayer;
@@ -32,6 +32,7 @@ public class Database : MonoBehaviour
     private void Init()
     {
         citizenTable = GetComponentInChildren<CitizenTable>();
+        SITable = GetComponentInChildren<StateInstitutionTable>();
         errorDisplayer = GetComponent<ErrorDisplayer>();
     }
 

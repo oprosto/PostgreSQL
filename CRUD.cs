@@ -1,5 +1,6 @@
 using Npgsql;
 using System;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public enum Tables
@@ -13,10 +14,8 @@ public enum Tables
 }
 public class CRUD : MonoBehaviour
 {
-    [SerializeField]private TMPro.TMP_Dropdown _optionChanger, _tableChanger;
-    [SerializeField]private TMPro.TMP_InputField _commandBlock;
-    //private static string curTableName = null;          //Сделать интерфейс itable в котором есть имя
-    //private static string[] curTableColumns = null;
+    //[SerializeField]private TMPro.TMP_Dropdown _optionChanger, _tableChanger;
+    //[SerializeField]private TMPro.TMP_InputField _commandBlock;
     private static ITable _curTable = null;
     private static string command = null;
 
@@ -31,7 +30,8 @@ public class CRUD : MonoBehaviour
             case Tables.Гражданин:
                 _curTable = Database.citizenTable;                
                 break;
-            case Tables.Дело:
+            case Tables.ГМУ:
+                _curTable = Database.SITable;
                 break;
         }
         ReadFromTable();
@@ -74,20 +74,10 @@ public class CRUD : MonoBehaviour
         }
         command = command.Substring(0, command.Length - 2);
         command += ")";
-        //НОВОЕ возможно стоит получать ошибку
-        /*command += " ON CONFLICT (";
-        foreach(string str in _curTable.P_KEY)
-        {
-            command += str + ", ";
-        }
-        command = command.Substring(0, command.Length - 2);
-        command += ") ";
-        command += "DO NOTHING";
-        */
     }
     public void Read()
     {
-        command = _commandBlock.text;
+        //command = _commandBlock.text;
         NpgsqlCommand cmd = new NpgsqlCommand(command, Database.dbConnection);
         cmd.ExecuteNonQuery();
     }
@@ -107,7 +97,7 @@ public class CRUD : MonoBehaviour
                 }
             }                
             
-            Debug.Log("Я вышел");
+            //Debug.Log("Я вышел");
         }
         catch (Exception e)
         {
@@ -115,7 +105,6 @@ public class CRUD : MonoBehaviour
             return false;
         }
         return true;
-        //cmd.ExecuteNonQuery();
     }
 
     public static bool UpdateElement(ITableElement oldElement, ITableElement newElement)
@@ -150,8 +139,8 @@ public class CRUD : MonoBehaviour
             command += str + " = @" + str + ", ";
         command = command.Substring(0, command.Length - 2);
         command += " WHERE ";
-        foreach (string key in _curTable.P_KEY)
-            command += key + " = @" + key + " AND ";
+        for (int i = 0; i < _curTable.P_KEY.Length; i++)        
+            command += _curTable.COLUMNS[i] + " = @K" + _curTable.COLUMNS[i] + " AND ";   
         command = command.Substring(0, command.Length - 5);
     }
     public static bool Delete(ITableElement element)
@@ -176,8 +165,8 @@ public class CRUD : MonoBehaviour
     private static void GenerateCommandDelete() 
     {
         command = $"DELETE FROM {_curTable.TABLE_NAME} WHERE ";
-        foreach (string key in _curTable.P_KEY)
-            command += key + " =@" + key + " AND ";
+        for (int i = 0; i < _curTable.P_KEY.Length; i++)
+            command += _curTable.COLUMNS[i] + " = @K" + _curTable.COLUMNS[i] + " AND ";
         command = command.Substring(0, command.Length - 5);
     }
 }

@@ -20,10 +20,6 @@ public class ErrorDisplayer : MonoBehaviour
         _imageColor = _image.color;
         _textColor = _textBox.color;
     }
-    private void Start()
-    {
-        //StartCoroutine(Fade());
-    }
     public void DisplayError(Exception e) 
     {
         Debug.LogException(e);

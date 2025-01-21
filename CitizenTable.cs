@@ -8,7 +8,7 @@ public class CitizenTable : MonoBehaviour, ITable
     private string _tableName = "Гражданин";
     public Dictionary<string, Citizen> _citizens = new Dictionary<string, Citizen>();
     private string[] _columns = { "Серия", "Номер", "ФИО", "Регистрация" };
-    private string[] _pKey = { "Серия", "Номер" };
+    private string[] _pKey = { "KСерия", "KНомер" };
     private CitizenTableUI _tableUI;
 
     private void Awake()

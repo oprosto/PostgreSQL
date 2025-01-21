@@ -46,7 +46,7 @@ public class CitizenTableUI : MonoBehaviour
         }
         catch (Exception e) 
         {
-            Debug.LogException(e);
+            Database.errorDisplayer.DisplayError(e);
         }
     }
     public void CreateFromRead(NpgsqlDataReader reader) 
@@ -64,7 +64,7 @@ public class CitizenTableUI : MonoBehaviour
         }
         catch (Exception e)
         {
-            Debug.LogException(e);
+            Database.errorDisplayer.DisplayError(e);
         }
     }
     private Citizen CreateCitizen(NpgsqlDataReader reader)

@@ -1,7 +1,6 @@
 using System;
 using UnityEngine;
 using UnityEngine.UI;
-using static UnityEditor.Progress;
 
 public class ItemCivilUI : MonoBehaviour
 {
@@ -12,7 +11,7 @@ public class ItemCivilUI : MonoBehaviour
     [SerializeField]
     private Image _background;
 
-    public Color _color;
+    private Color _color;
     public Citizen _citizen;
 
     public static ItemCivilUI _curChange = null;

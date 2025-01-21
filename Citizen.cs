@@ -28,24 +28,18 @@ public class Citizen : ITableElement
         data.Add(_number);
         data.Add(_fullName);
         data.Add(_placeOfResidence);
-        /*
-        data[0] = _series.ToString();
-        data[1] = _number.ToString();
-        data[2] = _fullName;
-        data[3] = _placeOfResidence;
-        */
     }
 
-    public int Series 
-    { 
-        get { return _series; } 
-        set 
+    public int Series
+    {
+        get { return _series; }
+        set
         {
             if (value < 1000 || value > 9999)
-                throw new Exception($"Неправильно введена серия паспорта: {value}");
+                throw new Exception($"Неправильно введена серия паспорта: {value}. Она должна состоять из четырех цифр");
             _series = value;
             _seriesAndNumber = _series.ToString() + " " + _number.ToString();
-            data.Insert(0,value);
+            data.Insert(0, value);
         }
     }
     public int Number
@@ -54,19 +48,19 @@ public class Citizen : ITableElement
         set
         {
             if (value < 100000 || value > 999999)
-                throw new Exception($"Неправильно введен номер паспорта: {value}");
+                throw new Exception($"Неправильно введен номер паспорта: {value}. Он должен состоять из шести цифр");
             _number = value;
             _seriesAndNumber = _series.ToString() + " " + _number.ToString();
             data.Insert(1, value);
         }
     }
-    public string FullName 
+    public string FullName
     {
         get { return _fullName; }
         set
         {
             if (value.Split().Length < 3)
-                throw new Exception($"Неправильно введено ФИО: {value}");
+                throw new Exception($"Неправильно введено ФИО: {value}. Оно должно состоять из трех слов");
             _fullName = value;
             data.Insert(2, value);
         }
